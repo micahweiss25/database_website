@@ -24,12 +24,12 @@ def load_user(userID):
     User.get(userID)
 
 
-@app.route("/login", method=["GET"])
+@app.route("/login", methods=["GET"])
 def login():
     return render_template("login.html")
 
 
-@app.route("/login", method=["POST"])
+@app.route("/login", methods=["POST"])
 def login_post():
     # Get username and password
     username = request.form.get("username")
@@ -37,8 +37,8 @@ def login_post():
 
     # Connect to database
     cnx = connect(user=CREDS["USERNAME"],
-                    password=CREDS["PASSWORD"],
-                    database=CREDS["DATABASE"])
+                  password=CREDS["PASSWORD"],
+                  database=CREDS["DATABASE"])
 
     # Get cursor
     cursor = cnx.cursor(prepared=True)
@@ -68,12 +68,12 @@ def logout():
     return redirect("/")
 
 
-@app.route("/register", method=["GET"])
+@app.route("/register", methods=["GET"])
 def register():
     return render_template("register.html")
 
 
-@app.route("/register", method=["POST"])
+@app.route("/register", methods=["POST"])
 def register_post():
     # Get username and password
     username = request.form.get("username")
@@ -111,7 +111,7 @@ def register_post():
         return redirect("/login")
 
 
-@app.route("/", method=["GET"])
+@app.route("/", methods=["GET"])
 @login_required
 def index():
     return render_template("viewProducts.html", user=current_user)
