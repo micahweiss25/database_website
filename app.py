@@ -1,4 +1,7 @@
-from flask import Flask, flash, render_template, request, redirect
+import sys
+import logging
+logging.error(sys.executable)
+from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_bcrypt import Bcrypt
 from mysql.connector import connect
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
@@ -6,7 +9,7 @@ from user import User
 
 CREDS = {}
 app = Flask(__name__)
-with open("password.txt", "r") as f:
+with open("/var/www/flask/password.txt", "r") as f:
     CREDS["PASSWORD"] = f.readline()
     CREDS["USERNAME"] = f.readline()
     CREDS["DATABASE"] = f.readline()
@@ -17,7 +20,7 @@ bcrypt = Bcrypt(app)
 
 login_manager = LoginManager()
 # redirect to login page if user is not logged in
-login_manager.login_view = "login"
+login_manager.login_view = "/flask/login"
 login_manager.init_app(app)
 
 
@@ -57,8 +60,9 @@ def login_post():
                         last_name=result[3],
                         admin=result[4],
                         seller=result[5])
+        flash("loggin sucessful")
         login_user(user, remember=True)
-        return redirect("/viewProducts.html")
+        return redirect(url_for("index"))
     flash("Invalid username or password")
     return render_template("login.html")
 
@@ -67,7 +71,7 @@ def login_post():
 @login_required
 def logout():
     logout_user()
-    return redirect("/")
+    return redirect(url_for("login"))
 
 
 @app.route("/register", methods=["GET"])
@@ -111,7 +115,7 @@ def register_post():
         cnx.commit()
         cnx.close()
         flash("Account created")
-        return redirect("/login")
+        return redirect(url_for("login"))
 
 
 @app.route("/", methods=["GET"])
