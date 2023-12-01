@@ -16,6 +16,8 @@ app.secret_key = CREDS["SECRET_KEY"]
 bcrypt = Bcrypt(app)
 
 login_manager = LoginManager()
+# redirect to login page if user is not logged in
+login_manager.login_view = "login"
 login_manager.init_app(app)
 
 
@@ -55,8 +57,8 @@ def login_post():
                         last_name=result[3],
                         admin=result[4],
                         seller=result[5])
-            login_user(user, remember=True)
-            return redirect("/viewProducts.html")
+        login_user(user, remember=True)
+        return redirect("/viewProducts.html")
     flash("Invalid username or password")
     return render_template("login.html")
 
@@ -70,6 +72,7 @@ def logout():
 
 @app.route("/register", methods=["GET"])
 def register():
+    logout_user()
     return render_template("register.html")
 
 
@@ -115,3 +118,7 @@ def register_post():
 @login_required
 def index():
     return render_template("viewProducts.html", user=current_user)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
