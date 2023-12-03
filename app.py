@@ -42,23 +42,40 @@ def login_post():
                   database=CREDS["DATABASE"])
 
     # Get cursor
-    cursor = cnx.cursor(prepared=True)
-    query = "SELECT * FROM Users WHERE userID = %s"
-    cursor.execute(query, [request.form["username"]])
-    result = cursor.fetchall()
-    cnx.close()
+    try:
+        cursor = cnx.cursor(prepared=True)
+    except Exception as e:
+        print(f"Error: failed to create cursor due to {e}")
+        raise e
+
+    # query database for username
+    try:
+        query = "SELECT * FROM Users WHERE userID = %s"
+        cursor.execute(query, [request.form["username"]])
+        result = cursor.fetchall()
+        cnx.close()
+    except Exception as e:
+        print(f"Error: failed to query database due to {e}")
+        raise e
+    
+    # check if username exists
     if len(result) > 0:
-        user = result[0]
-        if bcrypt.check_password_hash(user[4], request.form['password']):
-            user = User(userID=result[0],
-                        password_hash=bcrypt.generate_password_hash(result[1]).decode('utf-8'),
-                        first_name=result[2],
-                        last_name=result[3],
-                        admin=result[4],
-                        seller=result[5])
-        flash("loggin sucessful")
-        login_user(user, remember=True)
-        return redirect(url_for("index"))
+        try:
+            user = result[0]
+            if bcrypt.check_password_hash(user[4], request.form['password']):
+                user = User(userID=result[0],
+                            password_hash=bcrypt.generate_password_hash(result[1]).decode('utf-8'),
+                            first_name=result[2],
+                            last_name=result[3],
+                            admin=result[4],
+                            seller=result[5])
+            login_user(user, remember=True)
+            flash("loggin sucessful")
+            return redirect(url_for("index"))
+        except Exception as e:
+            print(f"Error: failed to login due to {e}")
+            raise e
+        
     flash("Invalid username or password")
     return render_template("login.html")
 
