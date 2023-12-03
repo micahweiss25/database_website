@@ -5,7 +5,7 @@ USE wpmb;
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
 	userID CHAR(9) NOT NULL,
-    password CHAR(14) NOT NULL,
+    password CHAR(60) NOT NULL,
     firstName CHAR(15) NOT NULL,
     lastName CHAR(15) NOT NULL,
     admin BOOLEAN NOT NULL,
@@ -281,30 +281,30 @@ SELECT * FROM Address;
 SELECT * FROM Book;
 
 
--- ### TESTS ###
+### TESTS ###
 
--- # Add a user
-CALL AddUser('johndoe', 'password', 'John', 'Doe', 0, 0, '1234567890123456', '2018-01-01', '123', '123 Main St', 'San Luis Obispo', 'CA', '93405');
-CALL AddUser('sallydoe', 'password', 'Sally', 'Doe', 0, 0, '1234567890122456', '2018-01-01', '123', '1213 Main St', 'San Luis Obispo', 'CA', '95405');
+# Add a user
+CALL AddUser('johndoe', '$2b$12$uf3AjZQW1E7H8KoUZ7pGuuOWU1uFL.EH/sUHh3mD2glF0myQc9ag2', 'John', 'Doe', 0, 0, '1234567890123456', '2018-01-01', '123', '123 Main St', 'San Luis Obispo', 'CA', '93405');
+CALL AddUser('sallydoe', '$2b$12$uf3AjZQW1E7H8KoUZ7pGuuOWU1uFL.EH/sUHh3mD2glF0myQc9ag2', 'Sally', 'Doe', 0, 0, '1234567890122456', '2018-01-01', '123', '1213 Main St', 'San Luis Obispo', 'CA', '95405');
 
--- # Update user address
--- CALL UpdateAddress(1, '123 Wall Street', 'New York City', 'NY', '10996', 'johndoe');
+# Update user address
+CALL UpdateAddress(1, '123 Wall Street', 'New York City', 'NY', '10996', 'johndoe');
 
--- # Update user credit card
--- CALL UpdateCreditCard('1234567890123456', '2018-02-01', '666', 'johndoe');
+# Update user credit card
+CALL UpdateCreditCard('1234567890123456', '2018-02-01', '666', 'johndoe');
 
--- # List a book
--- CALL ListBook('CSC 365', 10.00, '2018-01-01', 'John Doe', 'CSC 365', 'johndoe');
--- SELECT * FROM Book;
+# List a book
+CALL ListBook('CSC 365', 10.00, '2018-01-01', 'John Doe', 'CSC 365', 'johndoe');
+SELECT * FROM Book;
 
--- # List a ride
--- CALL ListRide('CSC 365', 10.00, '2018-01-01', '2018-01-01', 'San Luis Obispo', 4, 'johndoe');
--- SELECT * FROM Ride;
+# List a ride
+CALL ListRide('CSC 365', 10.00, '2018-01-01', '2018-01-01', 'San Luis Obispo', 4, 'johndoe');
+SELECT * FROM Ride;
 
--- # Bid on a product
--- CALL BidOnProduct('johndoe', 1, 20.00);
--- SELECT * FROM UserBids;
+# Bid on a product
+CALL BidOnProduct('johndoe', 1, 20.00);
+SELECT * FROM UserBids;
 
--- # Remove a user
+# Remove a user
 -- CALL RemoveUser('johndoe');
 -- SELECT * FROM Users;
