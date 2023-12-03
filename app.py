@@ -1,6 +1,4 @@
 import sys
-import logging
-logging.error(sys.executable)
 from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_bcrypt import Bcrypt
 from mysql.connector import connect
