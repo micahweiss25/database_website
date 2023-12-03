@@ -35,8 +35,6 @@ def login():
 @app.route("/login", methods=["POST"])
 def login_post():
     # Get username and password
-    username = request.form.get("username")
-    password = request.form.get("password")
 
     # Connect to database
     cnx = connect(user=CREDS["USERNAME"],
@@ -45,7 +43,7 @@ def login_post():
 
     # Get cursor
     cursor = cnx.cursor(prepared=True)
-    query = "SELECT * FROM users WHERE username = %s"
+    query = "SELECT * FROM Users WHERE userID = %s"
     cursor.execute(query, [request.form["username"]])
     result = cursor.fetchall()
     cnx.close()
