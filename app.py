@@ -34,7 +34,7 @@ def get_user_by_id(userID):
         raise e
     try:
         cursor = cnx.cursor(prepared=True)
-        query = "SELECT * FROM users WHERE userID = %s"
+        query = "SELECT * FROM Users WHERE userID = %s"
         cursor.execute(query, [userID])
         result = cursor.fetchall()[0]
         cnx.close()
