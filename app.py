@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from mysql.connector import connect
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from user import User
+import base64
 
 CREDS = {}
 app = Flask(__name__)
@@ -22,9 +23,43 @@ login_manager.login_view = "/flask/login"
 login_manager.init_app(app)
 
 
+def get_user_by_id(userID):
+    # Connect to database
+    try:
+        cnx = connect(user='micah',
+                      password='password',
+                      database='wpmb')
+    except Exception as e:
+        print(f"Error: failed to connect to database due to {e}")
+        raise e
+    try:
+        cursor = cnx.cursor(prepared=True)
+        query = "SELECT * FROM users WHERE userID = %s"
+        cursor.execute(query, [userID])
+        result = cursor.fetchall()[0]
+        cnx.close()
+    except Exception as e:
+        print(f"Error: failed to query database due to {e}")
+        raise e
+    if len(result) > 0:
+        try:
+            user = User(userID=result[0],
+                        password_hash=result[1],
+                        first_name=result[2],
+                        last_name=result[3],
+                        admin=result[4],
+                        seller=result[5])
+            return user
+        except Exception as e:
+            print(f"Error: failed to create user due to {e}")
+            raise e
+    else:
+        return None
+
+
 @login_manager.user_loader
 def load_user(userID):
-    User.get(userID)
+    return get_user_by_id(userID)
 
 
 @app.route("/login", methods=["GET"])
@@ -35,11 +70,13 @@ def login():
 @app.route("/login", methods=["POST"])
 def login_post():
     # Get username and password
+    username = request.form.get("username")
+    password = request.form.get("password")
 
     # Connect to database
-    cnx = connect(user=CREDS["USERNAME"],
-                  password=CREDS["PASSWORD"],
-                  database=CREDS["DATABASE"])
+    cnx = connect(user='micah',
+                  password='password',
+                  database='wpmb')
 
     # Get cursor
     try:
@@ -51,8 +88,8 @@ def login_post():
     # query database for username
     try:
         query = "SELECT * FROM Users WHERE userID = %s"
-        cursor.execute(query, [request.form["username"]])
-        result = cursor.fetchall()
+        cursor.execute(query, [username])
+        result = list(cursor.fetchall()[0])
         cnx.close()
     except Exception as e:
         print(f"Error: failed to query database due to {e}")
@@ -60,11 +97,12 @@ def login_post():
     
     # check if username exists
     if len(result) > 0:
+        user = None
         try:
-            user = result[0]
-            if bcrypt.check_password_hash(user[4], request.form['password']):
+            if bcrypt.check_password_hash(base64.b64decode(result[1]),
+                                          password):
                 user = User(userID=result[0],
-                            password_hash=bcrypt.generate_password_hash(result[1]).decode('utf-8'),
+                            password_hash=result[1],
                             first_name=result[2],
                             last_name=result[3],
                             admin=result[4],
