@@ -36,14 +36,13 @@
         <a href="{{ url_for('updateAccount') }}" id="updateAccount" class="right">Update Account</a>
         <a href="{{ url_for('login') }}" id="login" class="right">Login</a>
         <a href="{{ url_for('logout') }}" id="logout" class="right">Logout</a>
-        <a href="" id="listedProducts">Show Listed Products</a>
+        <a href="{{ url_for('viewProducts')}}" id="listedProducts">Show Listed Products</a>
         <a href="" id="bids">Show Bids</a>
         <a href="{{ url_for('register') }}" id="register" class="right">Register</a>
     </div>
-      
       <script>
-          var isLoggedIn = false; // This should be replaced with actual login status check
-          var isSeller = false; // This should be replaced with actual seller status check
+          var isLoggedIn = {{ current_user.is_authenticated|tojson|safe }}; // This should be replaced with actual login status check
+          var isSeller = {{ current_user.seller|tojson|safe }}; // This should be replaced with actual seller status check
       
           if (isLoggedIn) {
             document.getElementById('login').style.display = 'none';

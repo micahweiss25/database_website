@@ -40,8 +40,8 @@
         <a href="{{ url_for('register') }}" id="register" class="right">Register</a>
     </div>
       <script>
-          var isLoggedIn = user != null; // This should be replaced with actual login status check
-          var isSeller = false; // This should be replaced with actual seller status check
+          var isLoggedIn = {{ current_user.is_authenticated|tojson|safe }}; // This should be replaced with actual login status check
+          var isSeller = {{ current_user.seller|tojson|safe }}; // This should be replaced with actual seller status check
       
           if (isLoggedIn) {
             document.getElementById('login').style.display = 'none';
