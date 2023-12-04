@@ -1,0 +1,6 @@
+﻿name,startingPrice,nltDate,time,departureFrom,seatsAvailable,puserID
+Library-BSF,5,2023-12-31 23:59:59,2024-01-01 23:59:59,Library,2,ninaminer
+Library-Keller,3,2023-12-31 23:59:59,2024-01-01 23:59:59,Library,3,sallydoe
+Arvin-Michie,4.5,2023-12-31 23:59:59,2024-01-01 23:59:59,Arvin,3,sallydoe
+Grant-PX,6,2023-12-31 23:59:59,2024-01-01 23:59:59,Grant,4,ninaminer
+Grant-Starbucks,7.5,2023-12-31 23:59:59,2024-01-01 23:59:59,Grant,5,stevegill

@@ -2,9 +2,9 @@ import csv  # used for parsing the csv files we are importing
 from datetime import datetime  # used to convert dates
 from mysql.connector import connect # needed to connect to database
 
-_RIDE_CSV = 'extract_data1.csv'
-_BOOK_CSV = 'extract_data2.csv'
-_BIDS_CSV = 'extract_data3.csv'
+_RIDE_CSV = 'ride.csv'
+_BOOK_CSV = 'book.csv'
+_BIDS_CSV = 'bid.csv'
 _DB = 'wpmb'
 _USER = 'micah'
 _PASSWORD = "password"
