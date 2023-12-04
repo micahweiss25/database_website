@@ -83,7 +83,12 @@ DELIMITER //
 
 CREATE PROCEDURE ViewAllProducts()
 BEGIN
-    SELECT * FROM Product 
+    SELECT Product.productID, Product.name,
+    Product.startingPrice, Product.nltDate,
+    Ride.departureFrom,
+    Ride.seatsAvailable, Ride.time,
+    Book.author, Book.class
+    FROM Product 
     LEFT JOIN Ride ON Product.productID = Ride.productID 
     LEFT JOIN Book ON Product.productID = Book.productID;
 END //

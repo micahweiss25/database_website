@@ -56,8 +56,8 @@ def process_products(products):
 
         if product[4] is None:
             category = "Book"
-            author = product[11]
-            for_class = product[12]
+            author = product[7]
+            for_class = product[8]
             new_product = Product(productID=productID,
                                   name=name,
                                   price=price,
@@ -66,11 +66,11 @@ def process_products(products):
                                   author=author,
                                   for_class=for_class)
                                   
-        elif product[9] is None:
+        elif product[7] is None:
             category = "Ride"
             time = product[6]
-            departureFrom = product[7]
-            seatsAvailable = product[8]
+            departureFrom = product[4]
+            seatsAvailable = product[5]
             new_product = Product(productID=productID,
                                   name=name,
                                   price=price,
