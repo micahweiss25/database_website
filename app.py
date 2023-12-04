@@ -80,6 +80,7 @@ def process_products(products):
                                   departureFrom=departureFrom,
                                   seatsAvailable=seatsAvailable)
         data.append(new_product)
+    return data
 
 
 def get_user_by_id(userID):
