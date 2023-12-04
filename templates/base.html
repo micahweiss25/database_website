@@ -30,27 +30,36 @@
 <body>
 
     <div class="navbar">
-        <a href="#Books">Books</a>
-        <a href="#Rides">Rides</a>
-        <a href="#List Product">List Product</a>
-        <a href="#UpdateAccount" id="updateAccount" class="right">Update Account</a>
-        <a href="#Login" id="login" class="right">Login</a>
-        <a href="#ListedProducts" id="listedProducts">Show Listed Products</a>
-      </div>
+        <a href="{{ url_for('books') }}">Books</a>
+        <a href="{{ url_for('rides') }}">Rides</a>
+        <a href="{{ url_for('list_product') }}" id="listProducts">List Product</a>
+        <a href="{{ url_for('updateAccount') }}" id="updateAccount" class="right">Update Account</a>
+        <a href="{{ url_for('login') }}" id="login" class="right">Login</a>
+        <a href="{{ url_for('logout') }}" id="logout" class="right">Logout</a>
+        <a href="{{ url_for('listed_products') }}" id="listedProducts">Show Listed Products</a>
+        <a href="{{ url_for('bids') }}" id="bids">Show Bids</a>
+        <a href="{{ url_for('register') }}" id="register" class="right">Register</a>
+    </div>
       
       <script>
           var isLoggedIn = false; // This should be replaced with actual login status check
           var isSeller = false; // This should be replaced with actual seller status check
       
           if (isLoggedIn) {
-              document.getElementById('login').style.display = 'none';
-          } else {
-              document.getElementById('updateAccount').style.display = 'none';
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('register').style.display = 'none';
+            if (!isSeller) {
+                document.getElementById('listedProducts').style.display = 'none';
+            }
+        } else {
+            document.getElementById('bids').style.display = 'none';
+            document.getElementById('logout').style.display = 'none';
+            document.getElementById('listedProducts').style.display = 'none';
+            document.getElementById('listProducts').style.display = 'none';
+            document.getElementById('updateAccount').style.display = 'none';
           }
       
-          if (!isSeller) {
-              document.getElementById('listedProducts').style.display = 'none';
-          }
+
       </script>
 
 </body>

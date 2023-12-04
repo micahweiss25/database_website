@@ -83,7 +83,9 @@ DELIMITER //
 
 CREATE PROCEDURE ViewAllProducts()
 BEGIN
-    SELECT * FROM Product;
+    SELECT * FROM Product 
+    LEFT JOIN Ride ON Product.productID = Ride.productID 
+    LEFT JOIN Book ON Product.productID = Book.productID;
 END //
 
 CREATE PROCEDURE ViewAllRides()
@@ -155,6 +157,25 @@ BEGIN
     COMMIT;
 END //
 
+CREATE PROCEDURE ViewRide(
+    productID INT
+)
+BEGIN
+    SELECT * FROM Ride
+    JOIN Product ON Ride.productID = Product.productID
+    WHERE Ride.productID = productID;
+END //
+
+CREATE PROCEDURE ViewBook(
+    productID INT
+)
+BEGIN
+    SELECT * FROM Book
+    JOIN Product ON Book.productID = Product.productID
+    WHERE Book.productID = productID;
+END //
+
+
 CREATE PROCEDURE RemoveRide(
     productID INT
 )
@@ -222,7 +243,6 @@ BEGIN
 END //
 
 CREATE PROCEDURE UpdateAddress(
-    curr_addressID INT,
     new_street CHAR(30),
     new_city CHAR(30),
     new_state CHAR(2),
@@ -288,7 +308,7 @@ CALL AddUser('johndoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3N
 CALL AddUser('sallydoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Sally', 'Doe', 0, 0, '1234567890122456', '2018-01-01', '123', '1213 Main St', 'San Luis Obispo', 'CA', '95405');
 
 # Update user address
-CALL UpdateAddress(1, '123 Wall Street', 'New York City', 'NY', '10996', 'johndoe');
+CALL UpdateAddress('123 Wall Street', 'New York City', 'NY', '10996', 'johndoe');
 
 # Update user credit card
 CALL UpdateCreditCard('1234567890123456', '2018-02-01', '666', 'johndoe');

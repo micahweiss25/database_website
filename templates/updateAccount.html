@@ -7,19 +7,21 @@
     <div id="content" align="center">
         <form id="creditCardForm">
             <h1>Credit Card Information</h1>
-            <input type="text" id="cardName" placeholder="Name on Card" required><br><br>
-            <input type="text" id="cardNumber" placeholder="Card Number" required><br><br>
-            <input type="text" id="expiryDate" placeholder="Expiry Date (MM/YY)" required><br><br>
-            <input type="text" id="cvv" placeholder="CVV" required><br><br>
+            <input type="text" name="cardName" id="cardName" placeholder="Name on Card" required><br><br>
+            <input type="text" name="cardNumber" id="cardNumber" placeholder="Card Number" required><br><br>
+            <input type="text" name="expirationDate" id="expirationDate" placeholder="Expiration Date (MM/YY)" required><br><br>
+            <input type="text" name="cvv" id="cvv" placeholder="CVV" required><br><br>
+            <input type="hidden" name="form_name" value="creditCardForm">
             <input type="submit" value="Update Credit Card Info">
         </form>
 
         <form id="addressForm">
             <h1>Address Information</h1>
-            <input type="text" id="street" placeholder="Street" required><br><br>
-            <input type="text" id="city" placeholder="City" required><br><br>
-            <input type="text" id="state" placeholder="State" required><br><br>
-            <input type="text" id="zip" placeholder="Zip Code" required><br><br>
+            <input type="text" name="street" id="street" placeholder="Street" required><br><br>
+            <input type="text" name="city" id="city" placeholder="City" required><br><br>
+            <input type="text" name="state" id="state" placeholder="State" required><br><br>
+            <input type="text" name="zip" id="zip" placeholder="Zip Code" required><br><br>
+            <input type="hidden" name="form_name" value="addressForm">
             <input type="submit" value="Update Address Info">
         </form>
     </div>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ product.name }}</h1>
+    <p>Price: {{ product.price }}</p>
+    <p>Bid Expiration: {{ product.expiration }}</p>
+    {% if product.category == 'book' %}
+        <p>Category: Book</p>
+        <p>Author: {{ product.author }}</p>
+        <p>For Class: {{ product.for_class }}</p>
+    {% elif product.category == 'ride' %}
+        <p>Category: Ride</p>
+        <p>Departure Time: {{ product.time }}</p>
+        <p>Departure From: {{ product.departureFrom }}</p>
+        <p>Seats Available: {{ product.seatsAvailable }}</p>
+    {% else %}
+        <p>Category: Other</p>
+    {% endif %}
+{% endblock %}

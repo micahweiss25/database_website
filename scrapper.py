@@ -4,6 +4,7 @@ from mysql.connector import connect # needed to connect to database
 
 _RIDE_CSV = 'extract_data1.csv'
 _BOOK_CSV = 'extract_data2.csv'
+_BIDS_CSV = 'extract_data3.csv'
 _DB = 'wpmb'
 _USER = 'micah'
 _PASSWORD = "password"
@@ -19,6 +20,7 @@ CREATE_BOOK = """CALL TABLE ListBook (%s, %s, %s, %s, %s, %s);"""
 
 CREATE_RIDE = """CALL TABLE ListRide (%s, %s, %s, %s, %s, %s, %s);"""
 
+CREATE_BID = "CALL BidOnProduct (%s, %s, %s);"
 
 # Open the file, read each record iteratively, and insert to database
 with open(_RIDE_CSV, 'r', encoding='utf-8') as csvFile:
@@ -46,6 +48,14 @@ with open(_BOOK_CSV, 'r', encoding='utf-8') as csvFile:
 
         cursor.execute(CREATE_BOOK, record)
 
+with open(_BIDS_CSV, 'r', encoding='utf-8') as csvFile:
+    csvData = csv.DictReader(csvFile)
+    for record in csvData:
+        record['userID'] = record['userID'].strip()
+        record['productID'] = record['productID'].strip()
+        record['bidAmount'] = record['bidAmount'].strip()
+        
+        cursor.execute(CREATE_BID, record)
 
 # Commit the transaction
 cnx.commit()
