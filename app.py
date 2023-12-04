@@ -226,8 +226,12 @@ def register_post():
     
     cursor = cnx.cursor(prepared=True)
     query = "SELECT * FROM Users WHERE userID = %s"
-    cursor.execute(query, [username])
-    result = cursor.fetchall()
+    result = []
+    try:
+        cursor.execute(query, [username])
+        result = cursor.fetchall()
+    except Exception:
+        return redirect(url_for("login"))
     cnx.close()
     if len(result) > 0:
         flash("Username already exists")
@@ -239,15 +243,18 @@ def register_post():
                       database=DB_NAME)
         cursor = cnx.cursor(prepared=True)
         query = "INSERT INTO Users (userID, password_hash, first_name, last_name, admin, seller) VALUES (%s, %s, %s, %s, %s, %s)"
-        cursor.execute(query,
-                       (username,
-                        base64.b64encode(bcrypt.generate_password_hash(password).decode('utf-8')),
-                        first_name,
-                        last_name,
-                        0,
-                        0))
-        cnx.commit()
-        cnx.close()
+        try:
+            cursor.execute(query,
+                           (username,
+                               base64.b64encode(bcrypt.generate_password_hash(password).decode('utf-8')),
+                               first_name,
+                               last_name,
+                               0,
+                               0))
+            cnx.commit()
+            cnx.close()
+        except Exception:
+            return redirect(url_for("login"))
         flash("Account created")
         return redirect(url_for("login"))
 
