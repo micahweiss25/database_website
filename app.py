@@ -93,7 +93,7 @@ def get_user_by_id(userID):
         raise e
     try:
         cursor = cnx.cursor(prepared=True)
-        query = "SELECT * FROM Users WHERE userID = %s"
+        query = "SELECT * FROM Users WHERE userID = %s;"
         cursor.execute(query, [userID])
         result = cursor.fetchall()[0]
         cnx.close()
@@ -146,7 +146,7 @@ def login_post():
 
     # query database for username
     try:
-        query = "SELECT * FROM Users WHERE userID = %s"
+        query = "SELECT * FROM Users WHERE userID = %s;"
         cursor.execute(query, [username])
         result = list(cursor.fetchall()[0])
         cnx.close()
@@ -192,7 +192,7 @@ def index():
                   password=DB_PASSWORD,
                   database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
-    query = "CALL ViewAllProducts()"
+    query = "CALL ViewAllProducts();"
     cursor.execute(query)
     result = cursor.fetchall()
     data = process_products(result)
@@ -225,7 +225,7 @@ def register_post():
                   database=DB_NAME)
     
     cursor = cnx.cursor(prepared=True)
-    query = "SELECT * FROM Users WHERE userID = %s"
+    query = "SELECT * FROM Users WHERE userID = %s;"
     result = []
     try:
         cursor.execute(query, [username])
@@ -242,7 +242,7 @@ def register_post():
                       password=DB_PASSWORD,
                       database=DB_NAME)
         cursor = cnx.cursor(prepared=True)
-        query = "INSERT INTO Users (userID, password_hash, first_name, last_name, admin, seller) VALUES (%s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO Users (userID, password_hash, first_name, last_name, admin, seller) VALUES (%s, %s, %s, %s, %s, %s);"
         try:
             cursor.execute(query,
                            (username,
@@ -278,7 +278,7 @@ def updateAccount_post():
                       password=DB_PASSWORD,
                       database=DB_NAME)
         cursor = cnx.cursor(prepared=True)
-        query = "CALL UpdateCreditCard(%s, %s, %s, %s)"
+        query = "CALL UpdateCreditCard(%s, %s, %s, %s);"
         cursor.execute(query,
                        (cardNumber,
                         epirationDate,
@@ -297,7 +297,7 @@ def updateAccount_post():
                       password=DB_PASSWORD,
                       database=DB_NAME)
         cursor = cnx.cursor(prepared=True)
-        query = "CALL UpdateAddress(%s, %s, %s, %s, %s)"
+        query = "CALL UpdateAddress(%s, %s, %s, %s, %s);"
         cursor.execute(query,
                        (street,
                         city,
@@ -317,7 +317,7 @@ def viewProducts():
                   password=DB_PASSWORD,
                   database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
-    query = "CALL ViewAllProducts()"
+    query = "CALL ViewAllProducts();"
     cursor.execute(query)
     result = cursor.fetchall()
     data = process_products(result)
@@ -335,7 +335,7 @@ def product_detail(productID, category):
     cursor = cnx.cursor(prepared=True)
     product = None
     if category == "Book":
-        query = "CALL ViewBook(%s)"
+        query = "CALL ViewBook(%s);"
         cursor.execute(query, [productID])
         result = list(cursor.fetchall()[0])
         product = Product(productID=result[1],
@@ -347,7 +347,7 @@ def product_detail(productID, category):
                           for_class=result[3])
 
     elif category == "Ride":
-        query = "CALL ViewRide(%s)"
+        query = "CALL ViewRide(%s);"
         cursor.execute(query, [productID])
         result = list(cursor.fetchall()[0])
         product = Product(productID=result[1],
