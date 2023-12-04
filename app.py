@@ -187,7 +187,19 @@ def logout():
 @app.route("/", methods=["GET"])
 @login_required
 def index():
-    return render_template("viewProducts.html", user=current_user)
+    # Connect to database
+    cnx = connect(user=DB_USERNAME,
+                  password=DB_PASSWORD,
+                  database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL ViewAllProducts()"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    data = process_products(result)
+    cnx.close()
+    return render_template("viewProducts.html",
+                           user=current_user,
+                           products=data)
 
 
 @app.route("/register", methods=["GET"])
