@@ -62,18 +62,14 @@
 <h1>Rides</h1>
 <table>
     {% for product in products %}
-  <tr>
+    <tr>
       <td><a href="{{ url_for('product_detail', productID=product.productID, category=product.category) }}">{{ product.name }}</a></td>
       <td>{{ product.price }}</td>
       <td>{{ product.expiration }}</td>
-      <td>Ride</td>
-          <td>{{ product.author }}</td>
-          <td>{{ product.for_class }}</td>
-          <td>{{ product.time }}</td>
-          <td>{{ product.departureFrom }}</td>
-          <td>{{ product.seatsAvailable }}</td>
-      <td>Other</td>
-  </tr>
+      <td>{{ product.time }}</td>
+      <td>{{ product.departureFrom }}</td>
+      <td>{{ product.seatsAvailable }}</td>
+    </tr>
     {% endfor %}
 </table>
 </body>
