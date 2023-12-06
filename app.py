@@ -436,7 +436,7 @@ def create_book():
                     password=DB_PASSWORD,
                     database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
-    query = "CALL ListBook(%(name)s, %(startingPrice)s, %(nltDate)s, %(author)s, %(for_class)s, %(puserID)s);"
+    query = "CALL ListBook(%(name)s, %(startingPrice)s, %(nltDate)s, %(author)s, %(class)s, %(puserID)s);"
     cursor.execute(query,
                     (name,
                     startingPrice,
