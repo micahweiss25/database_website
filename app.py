@@ -359,7 +359,6 @@ def product_detail(productID, category):
                           price=result[7],
                           expiration=result[8])
     cnx.close()
-    product = process_products(result)[0]
     return render_template("productDetail.html",
                            user=current_user,
                            product=product)
