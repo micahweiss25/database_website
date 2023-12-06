@@ -338,8 +338,7 @@ def product_detail(productID, category):
     if category == "Book":
         query = "CALL ViewBook(%s);"
         cursor.execute(query, [productID])
-        result = cursor.fetchall()[0]
-        raise Exception(result)
+        result = list(cursor.fetchall()[0])
         product = Product(productID=result[1],
                           name=result[5],
                           price=result[6],
@@ -351,8 +350,7 @@ def product_detail(productID, category):
     elif category == "Ride":
         query = "CALL ViewRide(%s);"
         cursor.execute(query, [productID])
-        result = cursor.fetchall()[0]
-        raise Exception(result)
+        result = list(cursor.fetchall()[0])
         product = Product(productID=result[1],
                           time=result[2],
                           departureFrom=result[3],
