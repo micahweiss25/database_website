@@ -418,7 +418,7 @@ def rides():
                            products=products)
 
 
-@app.route("listProduct", methods=["GET"])
+@app.route("/listProduct", methods=["GET"])
 def listProduct():
     return render_template("listProduct.html",
                            user=current_user)
