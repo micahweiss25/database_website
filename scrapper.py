@@ -16,11 +16,11 @@ cursor = cnx.cursor()
 
 
 # Create procedure to insert into Item table
-CREATE_BOOK = """CALL ListBook(%s, %s, %s, %s, %s, %s);"""
+CREATE_BOOK = """CALL ListBook(%(name)s, %(startingPrice)s, %(nltDate)s, %(author)s, %(class)s, %(puserID)s);"""
 
 CREATE_RIDE = """CALL ListRide(%(name)s, %(startingPrice)s, %(nltDate)s, %(time)s, %(departureFrom)s, %(seatsAvailable)s, %(puserID)s);"""
 
-CREATE_BID = "CALL BidOnProduct(%s, %s, %s);"
+CREATE_BID = "CALL BidOnProduct(%(userID)s, %(productID)s, %(bidAmount)s);"
 
 # Open the file, read each record iteratively, and insert to database
 with open(_RIDE_CSV, 'r', encoding='utf-8') as csvFile:
