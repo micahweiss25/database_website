@@ -365,5 +365,22 @@ def product_detail(productID, category):
                            product=product)
 
 
+# route for books
+@app.route("/books", methods=["GET"])
+def books():
+    cnx = connect(user=DB_USERNAME,
+                  password=DB_PASSWORD,
+                  database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL ViewAllBooks();"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    data = process_products(result)
+    cnx.close()
+    return render_template("books.html",
+                           user=current_user,
+                           products=data)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
