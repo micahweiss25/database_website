@@ -338,7 +338,8 @@ def product_detail(productID, category):
     if category == "Book":
         query = "CALL ViewBook(%s);"
         cursor.execute(query, [productID])
-        result = list(cursor.fetchall()[0])
+        result = cursor.fetchall()[0]
+        raise Exception(result)
         product = Product(productID=result[1],
                           name=result[5],
                           price=result[6],
@@ -351,6 +352,7 @@ def product_detail(productID, category):
         query = "CALL ViewRide(%s);"
         cursor.execute(query, [productID])
         result = cursor.fetchall()[0]
+        raise Exception(result)
         product = Product(productID=result[1],
                           time=result[2],
                           departureFrom=result[3],
@@ -377,7 +379,7 @@ def books():
     result = cursor.fetchall()
     products = []
     for product in result:
-        new_product = Product(productID=result[1],
+        new_product = Product(productID=product[1],
                           name=product[5],
                           price=product[6],
                           expiration=product[7],
@@ -415,7 +417,7 @@ def rides():
     cnx.close()
     return render_template("rides.html",
                            user=current_user,
-                           products=data)
+                           products=products)
 
 
 if __name__ == "__main__":
