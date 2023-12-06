@@ -357,10 +357,19 @@ def product_detail(productID, category):
                           name=result[6],
                           price=result[7],
                           expiration=result[8])
+    query = "CALL ViewBids(%s);"
+    cursor.execute(query, [productID])
+    result = cursor.fetchall()
+    raise Exception(result)
+    bids = []
+    for bid in result:
+        bids.append(bid[0])
+
     cnx.close()
     return render_template("productDetail.html",
                            user=current_user,
-                           product=product)
+                           product=product,
+                           bids=bids)
 
 
 # route for books

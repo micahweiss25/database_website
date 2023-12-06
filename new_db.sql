@@ -296,6 +296,11 @@ BEGIN
     COMMIT;
 END //
 
+CREATE PROCEDURE GetBidsForProduct(IN productID INT)
+BEGIN
+    SELECT * FROM UserBids WHERE productID = productID;
+END //
+
 DELIMITER ;
 
 
