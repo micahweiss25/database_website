@@ -382,5 +382,22 @@ def books():
                            products=data)
 
 
+# route for rides
+@app.route("/rides", methods=["GET"])
+def rides():
+    cnx = connect(user=DB_USERNAME,
+                  password=DB_PASSWORD,
+                  database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL ViewAllRides();"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    data = process_products(result)
+    cnx.close()
+    return render_template("rides.html",
+                           user=current_user,
+                           products=data)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
