@@ -31,7 +31,7 @@
     <div class="navbar">
         <a href="{{ url_for('books') }}">Books</a>
         <a href="{{ url_for('rides') }}">Rides</a>
-        <a href="" id="listProducts">List Product</a>
+        <a href="{{ url_for('ListProduct') }}" id="listProducts">List Product</a>
         <a href="{{ url_for('updateAccount') }}" id="updateAccount" class="right">Update Account</a>
         <a href="{{ url_for('login') }}" id="login" class="right">Login</a>
         <a href="{{ url_for('logout') }}" id="logout" class="right">Logout</a>
@@ -59,7 +59,6 @@
       
 
       </script>
-    <h1> lil bit of test content </h1>
     <h1>{{ product.name }}</h1>
     <p>Price: {{ product.price }}</p>
     <p>Bid Expiration: {{ product.expiration }}</p>

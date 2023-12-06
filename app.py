@@ -418,5 +418,65 @@ def rides():
                            products=products)
 
 
+@app.route("listProduct", methods=["GET"])
+def listProduct():
+    return render_template("listProduct.html",
+                           user=current_user)
+
+
+@app.route("/create_book", methods=["POST"])
+def create_book():
+    name = request.form.get("name")
+    startingPrice = request.form.get("startingPrice")
+    nltDate = request.form.get("nltDate")
+    author = request.form.get("author")
+    for_class = request.form.get("for_class")
+    # Connect to database
+    cnx = connect(user=DB_USERNAME,
+                    password=DB_PASSWORD,
+                    database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL ListBook(%(name)s, %(startingPrice)s, %(nltDate)s, %(author)s, %(for_class)s, %(psuser)s);"
+    cursor.execute(query,
+                    (name,
+                    startingPrice,
+                    nltDate,
+                    author,
+                    for_class,
+                    current_user.userID))
+    cnx.commit()
+    cnx.close()
+    flash("Book listed")
+    return redirect(url_for("index"))
+
+
+@app.route("/create_ride", methods=["POST"])
+def create_ride():
+    name = request.form.get("name")
+    startingPrice = request.form.get("startingPrice")
+    nltDate = request.form.get("nltDate")
+    time = request.form.get("time")
+    departureFrom = request.form.get("departureFrom")
+    seatsAvailable = request.form.get("seatsAvailable")
+    # Connect to database
+    cnx = connect(user=DB_USERNAME,
+                    password=DB_PASSWORD,
+                    database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL ListRide(%(name)s, %(startingPrice)s, %(nltDate)s, %(time)s, %(departureFrom)s, %(seatsAvailable)s, %(psuser)s);"
+    cursor.execute(query,
+                    (name,
+                    startingPrice,
+                    nltDate,
+                    time,
+                    departureFrom,
+                    seatsAvailable,
+                    current_user.userID))
+    cnx.commit()
+    cnx.close()
+    flash("Ride listed")
+    return redirect(url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
