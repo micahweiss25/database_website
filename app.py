@@ -349,6 +349,7 @@ def product_detail(productID, category):
         query = "CALL ViewRide(%s);"
         cursor.execute(query, [productID])
         result = list(cursor.fetchall()[0])
+        # raise Exception(result)
         product = Product(productID=result[1],
                           time=result[2],
                           departureFrom=result[3],
@@ -357,7 +358,7 @@ def product_detail(productID, category):
                           name=result[6],
                           price=result[7],
                           expiration=result[8])
-    query = "CALL ViewBids(%s);"
+    query = "CALL GetBidsForProduct(%s);"
     cursor.execute(query, [productID])
     result = cursor.fetchall()
     raise Exception(result)
