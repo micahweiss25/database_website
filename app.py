@@ -186,7 +186,6 @@ def logout():
 
 
 @app.route("/", methods=["GET"])
-@login_required
 def index():
     # Connect to database
     cnx = connect(user=DB_USERNAME,
@@ -199,7 +198,6 @@ def index():
     data = process_products(result)
     cnx.close()
     return render_template("viewProducts.html",
-                           user=current_user,
                            products=data)
 
 
