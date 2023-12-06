@@ -476,5 +476,72 @@ def create_ride():
     return redirect(url_for("index"))
 
 
+@app.route("/bid", methods=["POST"])
+def bid():
+    productID = request.form.get("productID")
+    bidAmount = request.form.get("bid")
+    # Connect to database
+    cnx = connect(user=DB_USERNAME,
+                    password=DB_PASSWORD,
+                    database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL BidOnProduct(%s, %s, %s);"
+    cursor.execute(query,
+                    (current_user.get_id(),
+                    productID,
+                    bidAmount))
+    cnx.commit()
+    cnx.close()
+    flash("Bid placed")
+    return redirect(url_for("index"))
+
+
+@app.route("/removeUser", methods=["GET"])
+def removeUser():
+    return render_template("removeUser.html",
+                           user=current_user)
+
+
+@app.route("/removeUser", methods=["POST"])
+def removeUser_post():
+    userID = request.form.get("userID")
+    # Connect to database
+    cnx = connect(user=DB_USERNAME,
+                    password=DB_PASSWORD,
+                    database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL RemoveUser(%s);"
+    cursor.execute(query,
+                    (userID))
+    cnx.commit()
+    cnx.close()
+    flash("User removed")
+    return redirect(url_for("index"))
+
+
+@app.route("/removeProduct", methods=["GET"])
+def removeProduct():
+    return render_template("removeProduct.html",
+                           user=current_user)
+
+
+@app.route("/removeProduct", methods=["POST"])
+def removeProduct_post():
+    productID = request.form.get("productID")
+    # Connect to database
+    cnx = connect(user=DB_USERNAME,
+                    password=DB_PASSWORD,
+                    database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL RemoveProduct(%s);"
+    cursor.execute(query,
+                    (productID))
+    cnx.commit()
+    cnx.close()
+    flash("Product removed")
+    return redirect(url_for("index"))
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
