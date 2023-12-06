@@ -378,12 +378,12 @@ def books():
     products = []
     for product in result:
         new_product = Product(productID=result[1],
-                          name=result[5],
-                          price=result[6],
-                          expiration=result[7],
+                          name=product[5],
+                          price=product[6],
+                          expiration=product[7],
                           category='Book',
-                          author=result[2],
-                          for_class=result[3])
+                          author=product[2],
+                          for_class=product[3])
         products.append(new_product)
     cnx.close()
     return render_template("books.html",
@@ -403,14 +403,14 @@ def rides():
     result = cursor.fetchall()
     products = []
     for product in result:
-        new_product = Product(productID=result[1],
-                          time=result[2],
-                          departureFrom=result[3],
-                          seatsAvailable=result[4],
+        new_product = Product(productID=product[1],
+                          time=product[2],
+                          departureFrom=product[3],
+                          seatsAvailable=product[4],
                           category='Ride',
-                          name=result[6],
-                          price=result[7],
-                          expiration=result[8])
+                          name=product[6],
+                          price=product[7],
+                          expiration=product[8])
         products.append(new_product)
     cnx.close()
     return render_template("rides.html",
