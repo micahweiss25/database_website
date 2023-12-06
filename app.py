@@ -350,7 +350,7 @@ def product_detail(productID, category):
     elif category == "Ride":
         query = "CALL ViewRide(%s);"
         cursor.execute(query, [productID])
-        result = list(cursor.fetchall()[0])
+        result = cursor.fetchall()[0]
         product = Product(productID=result[1],
                           time=result[2],
                           departureFrom=result[3],
@@ -375,11 +375,20 @@ def books():
     query = "CALL ViewAllBooks();"
     cursor.execute(query)
     result = cursor.fetchall()
-    data = process_products(result)
+    products = []
+    for product in result:
+        new_product = Product(productID=result[1],
+                          name=result[5],
+                          price=result[6],
+                          expiration=result[7],
+                          category='Book',
+                          author=result[2],
+                          for_class=result[3])
+        products.append(new_product)
     cnx.close()
     return render_template("books.html",
                            user=current_user,
-                           products=data)
+                           products=products)
 
 
 # route for rides
@@ -392,7 +401,17 @@ def rides():
     query = "CALL ViewAllRides();"
     cursor.execute(query)
     result = cursor.fetchall()
-    data = process_products(result)
+    products = []
+    for product in result:
+        new_product = Product(productID=result[1],
+                          time=result[2],
+                          departureFrom=result[3],
+                          seatsAvailable=result[4],
+                          category='Ride',
+                          name=result[6],
+                          price=result[7],
+                          expiration=result[8])
+        products.append(new_product)
     cnx.close()
     return render_template("rides.html",
                            user=current_user,

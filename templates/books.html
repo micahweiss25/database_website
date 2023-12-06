@@ -59,18 +59,17 @@
       
 
       </script>
-<h1>Products</h1>
+<h1>Books</h1>
 <table>
     {% for product in products %}
-  <tr>
+    <tr>
       <td><a href="{{ url_for('product_detail', productID=product.productID, category=product.category) }}">{{ product.name }}</a></td>
       <td>{{ product.price }}</td>
       <td>{{ product.expiration }}</td>
-      <td>Book</td>
-          <td>{{ product.author }}</td>
-          <td>{{ product.for_class }}</td>
+      <td>{{ product.author }}</td>
+      <td>{{ product.for_class }}</td>
       <td>Other</td>
-  </tr>
+    </tr>
     {% endfor %}
 </table>
 </body>
