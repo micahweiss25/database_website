@@ -74,10 +74,10 @@
     {% else %}
         <p>Category: Other</p>
     {% endif %}
-    <form action="/flask/bid">
+    <form action="{{ url_for('bid') }}" method="GET">
         <label for="bid">Bid:</label>
         <input type="number" id="bid" name="bid" step="0.01" required>
-        <input name="productID" type="hidden" value="{{ product.productID }}">
+        <input name="productID" type="hidden" value="1">
         <input type="submit" value="Bid">
     </form>
 </body>

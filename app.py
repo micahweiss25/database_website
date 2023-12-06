@@ -476,10 +476,12 @@ def create_ride():
     return redirect(url_for("index"))
 
 
-@app.route("/bid", methods=["POST"])
+@app.route("/bid", methods=["GET"])
 def bid():
-    productID = request.form.get("productID")
-    bidAmount = request.form.get("bid")
+    # productID = request.form.get("productID")
+    productID = request.args.get("productID")
+
+    bidAmount = request.args.get("bid")
     # Connect to database
     cnx = connect(user=DB_USERNAME,
                     password=DB_PASSWORD,
@@ -494,6 +496,11 @@ def bid():
     cnx.close()
     flash("Bid placed")
     return redirect(url_for("index"))
+
+
+@app.route("/bid", methods=["POST"])
+def bid_post():
+    raise Exception("should not have posted")
 
 
 @app.route("/removeUser", methods=["GET"])
