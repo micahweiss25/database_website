@@ -29,8 +29,8 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="">Books</a>
-        <a href="">Rides</a>
+        <a href="{{ url_for('books') }}">Books</a>
+        <a href="{{ url_for('rides') }}">Rides</a>
         <a href="" id="listProducts">List Product</a>
         <a href="{{ url_for('updateAccount') }}" id="updateAccount" class="right">Update Account</a>
         <a href="{{ url_for('login') }}" id="login" class="right">Login</a>
