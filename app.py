@@ -436,7 +436,7 @@ def create_book():
                     password=DB_PASSWORD,
                     database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
-    query = "CALL ListBook(%(name)s, %(startingPrice)s, %(nltDate)s, %(author)s, %(for_class)s, %(psuser)s);"
+    query = "CALL ListBook(%(name)s, %(startingPrice)s, %(nltDate)s, %(author)s, %(for_class)s, %(psuserID)s);"
     cursor.execute(query,
                     (name,
                     startingPrice,
@@ -463,7 +463,7 @@ def create_ride():
                     password=DB_PASSWORD,
                     database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
-    query = "CALL ListRide(%(name)s, %(startingPrice)s, %(nltDate)s, %(time)s, %(departureFrom)s, %(seatsAvailable)s, %(psuser)s);"
+    query = "CALL ListRide(%(name)s, %(startingPrice)s, %(nltDate)s, %(time)s, %(departureFrom)s, %(seatsAvailable)s, %(psuserID)s);"
     cursor.execute(query,
                     (name,
                     startingPrice,
