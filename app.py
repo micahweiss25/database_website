@@ -355,6 +355,7 @@ def product_detail(productID, category):
                           time=result[2],
                           departureFrom=result[3],
                           seatsAvailable=result[4],
+                          category=category,
                           name=result[6],
                           price=result[7],
                           expiration=result[8])
