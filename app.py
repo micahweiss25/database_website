@@ -430,7 +430,7 @@ def create_book():
     startingPrice = request.form.get("startingPrice")
     nltDate = request.form.get("nltDate")
     author = request.form.get("author")
-    for_class = request.form.get("for_class")
+    for_class = request.form.get("class")
     # Connect to database
     cnx = connect(user=DB_USERNAME,
                     password=DB_PASSWORD,
