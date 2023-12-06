@@ -296,9 +296,12 @@ BEGIN
     COMMIT;
 END //
 
-CREATE PROCEDURE GetBidsForProduct(IN productID INT)
+CREATE PROCEDURE GetBidsForProduct(
+    productID INT
+)
 BEGIN
-    SELECT * FROM UserBids WHERE productID = productID;
+    SELECT * FROM UserBids
+    WHERE UserBids.productID = productID;
 END //
 
 DELIMITER ;

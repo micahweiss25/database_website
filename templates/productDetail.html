@@ -77,7 +77,6 @@
     <table>
         <thead>
             <tr>
-                <th>Product ID</th>
                 <th>Bid Amount</th>
                 <th>Bidder</th>
             </tr>
@@ -85,7 +84,6 @@
         <tbody>
             {% for bid in bids %}
                 <tr>
-                    <td>{{ bid.productID }}</td>
                     <td>{{ bid.amount }}</td>
                     <td>{{ bid.bidder }}</td>
                 </tr>

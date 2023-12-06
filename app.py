@@ -20,6 +20,16 @@ login_manager.login_view = "/flask/login"
 login_manager.init_app(app)
 
 
+class Bid:
+    def __init__(self,
+                 productID,
+                 amount,
+                 bidder):
+        self.productID = productID
+        self.amount = amount
+        self.bidder = bidder
+
+
 class Product:
     def __init__(self,
                  productID,
@@ -358,13 +368,21 @@ def product_detail(productID, category):
                           name=result[6],
                           price=result[7],
                           expiration=result[8])
+    # raise Exception(productID)
     query = "CALL GetBidsForProduct(%s);"
+    cnx.close()
+    cnx = connect(user=DB_USERNAME,
+                  password=DB_PASSWORD,
+                  database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
     cursor.execute(query, [productID])
-    result = cursor.fetchall()
-    raise Exception(result)
+    results = cursor.fetchall()
     bids = []
-    for bid in result:
-        bids.append(bid[0])
+    for bid in results:
+        new_bid = Bid(productID=bid[2],
+                      amount=bid[3],
+                      bidder=bid[1])
+        bids.append(new_bid)
 
     cnx.close()
     return render_template("productDetail.html",
@@ -502,7 +520,8 @@ def bid():
                     (current_user.get_id(),
                     productID,
                     bidAmount))
-    cnx.commit()
+    result = cursor.fetchall()
+
     cnx.close()
     flash("Bid placed")
     return redirect(url_for("index"))
