@@ -463,7 +463,7 @@ def create_ride():
                     password=DB_PASSWORD,
                     database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
-    query = "CALL ListRide(%(name)s, %(startingPrice)s, %(nltDate)s, %(time)s, %(departureFrom)s, %(seatsAvailable)s, %(puserID)s);"
+    query = "CALL ListRide(%s, %s, %s, %s, %s, %s, %s);"
     cursor.execute(query,
                     (name,
                     startingPrice,
