@@ -11,16 +11,16 @@ _PASSWORD = "password"
 
 
 # Connect to the database
-cnx = connect(user=_USER, password=_PASSWORD)
+cnx = connect(user=_USER, password=_PASSWORD, database=_DB)
 cursor = cnx.cursor()
 
 
 # Create procedure to insert into Item table
-CREATE_BOOK = """CALL TABLE ListBook (%s, %s, %s, %s, %s, %s);"""
+CREATE_BOOK = """CALL ListBook(%s, %s, %s, %s, %s, %s);"""
 
-CREATE_RIDE = """CALL TABLE ListRide (%s, %s, %s, %s, %s, %s, %s);"""
+CREATE_RIDE = """CALL ListRide(%(name)s, %(startingPrice)s, %(nltDate)s, %(time)s, %(departureFrom)s, %(seatsAvailable)s, %(puserID)s);"""
 
-CREATE_BID = "CALL BidOnProduct (%s, %s, %s);"
+CREATE_BID = "CALL BidOnProduct(%s, %s, %s);"
 
 # Open the file, read each record iteratively, and insert to database
 with open(_RIDE_CSV, 'r', encoding='utf-8') as csvFile:
@@ -33,7 +33,13 @@ with open(_RIDE_CSV, 'r', encoding='utf-8') as csvFile:
         record['departureFrom'] = record['departureFrom'].strip()
         record['seatsAvailable'] = record['seatsAvailable'].strip()
         record['puserID'] = record['puserID'].strip()
-        
+    #         name CHAR(30),
+    # startingPrice DECIMAL(5,2),
+    # nltDate DATETIME,
+    # time DATETIME,
+    # departureFrom CHAR(30),
+    # seatsAvailable INT,
+    # puserID CHAR(9)
         cursor.execute(CREATE_RIDE, record)
 
 with open(_BOOK_CSV, 'r', encoding='utf-8') as csvFile:

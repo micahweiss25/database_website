@@ -306,11 +306,41 @@ SELECT * FROM Address;
 SELECT * FROM Book;
 
 
+-- # Add a user
+CALL AddUser('johndoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'John', 'Doe', 0, 0, '1234567890123456', '2018-01-01', '123', '123 Main St', 'San Luis Obispo', 'CA', '93405');
+CALL AddUser('sallydoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Sally', 'Doe', 0, 0, '1234567890122456', '2018-01-01', '123', '1213 Main St', 'San Luis Obispo', 'CA', '95405');
+CALL AddUser('stevegill', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Steve', 'Gilland', 0, 0, '1234567890125456', '2018-01-01', '123', '124 Main St', 'San Luis Obispo', 'CA', '95405');
+CALL AddUser('joebiden', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Joe', 'Biden', 0, 0, '1234567890125457', '2018-01-01', '123', '125 Main St', 'San Luis Obispo', 'CA', '95405');
+CALL AddUser('ninaminer', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Nina', 'Miner', 0, 0, '1234567890125458', '2018-01-01', '123', '126 Main St', 'San Luis Obispo', 'CA', '95405');
+
+SELECT * FROM Users;
+
+
+DROP USER IF EXISTS 'admin'@'localhost';
+DROP USER IF EXISTS 'buyer'@'localhost';
+DROP USER IF EXISTS 'seller'@'localhost';
+DROP USER IF EXISTS 'comp'@'localhost';
+CREATE USER 'admin'@'localhost';
+CREATE USER 'buyer'@'localhost';
+CREATE USER 'seller'@'localhost';
+CREATE USER 'comp'@'localhost';
+ 
+GRANT EXECUTE ON PROCEDURE ViewAllProducts TO 'admin'@'localhost', 'buyer'@'localhost', 'seller'@'localhost', 'comp'@'localhost';
+GRANT EXECUTE ON PROCEDURE ViewAllRides TO 'admin'@'localhost', 'buyer'@'localhost', 'seller'@'localhost', 'comp'@'localhost';
+GRANT EXECUTE ON PROCEDURE ViewAllBooks TO 'admin'@'localhost', 'buyer'@'localhost', 'seller'@'localhost', 'comp'@'localhost';
+GRANT EXECUTE ON PROCEDURE BidOnProduct TO 'buyer'@'localhost';
+GRANT EXECUTE ON PROCEDURE ListRide TO 'seller'@'localhost';
+GRANT EXECUTE ON PROCEDURE ListBook TO 'seller'@'localhost';
+GRANT EXECUTE ON PROCEDURE RemoveRide TO 'seller'@'localhost';
+GRANT EXECUTE ON PROCEDURE RemoveBook TO 'seller'@'localhost';
+GRANT EXECUTE ON PROCEDURE AddUser TO 'admin'@'localhost';
+GRANT EXECUTE ON PROCEDURE RemoveUser TO 'admin'@'localhost';
+ 
+ 
+ 
 ### TESTS ###
 
 # Add a user
-CALL AddUser('johndoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'John', 'Doe', 0, 0, '1234567890123456', '2018-01-01', '123', '123 Main St', 'San Luis Obispo', 'CA', '93405');
-CALL AddUser('sallydoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Sally', 'Doe', 0, 0, '1234567890122456', '2018-01-01', '123', '1213 Main St', 'San Luis Obispo', 'CA', '95405');
 
 # Update user address
 CALL UpdateAddress('123 Wall Street', 'New York City', 'NY', '10996', 'johndoe');
@@ -329,7 +359,6 @@ SELECT * FROM Ride;
 # Bid on a product
 CALL BidOnProduct('johndoe', 1, 20.00);
 SELECT * FROM UserBids;
-
-# Remove a user
--- CALL RemoveUser('johndoe');
--- SELECT * FROM Users;
+CALL ViewAllProducts();
+-- ### TESTS ###
+ 
