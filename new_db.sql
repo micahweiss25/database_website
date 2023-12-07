@@ -1,5 +1,4 @@
-Terminal close -- exit!
-wpmb;
+DROP DATABASE IF EXISTS wpmb;
 CREATE DATABASE wpmb;
 USE wpmb;
 
