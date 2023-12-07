@@ -28,7 +28,6 @@
     </style>
 </head>
 <body>
-
     <div class="navbar">
         <a href="{{ url_for('books') }}" id="books">Books</a>
         <a href="{{ url_for('rides') }}" id="rides">Rides</a>
@@ -37,7 +36,6 @@
         <a href="{{ url_for('login') }}" id="login" class="right">Login</a>
         <a href="{{ url_for('logout') }}" id="logout" class="right">Logout</a>
         <a href="{{ url_for('viewProducts')}}" id="listedProducts">Show Listed Products</a>
-        <a href="" id="bids">Show Bids</a>
         <a href="{{ url_for('register') }}" id="register" class="right">Register</a>
         <a href="{{ url_for('removeProduct') }}" id="removeProduct">Remove Product</a>
         <a href="{{ url_for('removeUser') }}" id="removeUser">Remove User</a>
@@ -47,10 +45,15 @@
         
         if (isLoggedIn) {
           var isSeller = {{ current_user.seller|default(false)|tojson|safe }}; // Replace undefined with a default value
+          var isAdmin = {{ current_user.admin|default(false)|tojson|safe }};
           document.getElementById('login').style.display = 'none';
           document.getElementById('register').style.display = 'none';
           if (!isSeller) {
               document.getElementById('listedProducts').style.display = 'none';
+          }
+          if (!isAdmin) {
+              document.getElementById('removeProduct').style.display = 'none';
+              document.getElementById('removeUser').style.display = 'none';
           }
       } else {
           document.getElementById('bids').style.display = 'none';
@@ -58,10 +61,10 @@
           document.getElementById('listedProducts').style.display = 'none';
           document.getElementById('listProducts').style.display = 'none';
           document.getElementById('updateAccount').style.display = 'none';
+          document.getElementById('removeProduct').style.display = 'none';
+          document.getElementById('removeUser').style.display = 'none';
         }
     
 
     </script>
-
-</body>
 </html>

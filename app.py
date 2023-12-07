@@ -218,11 +218,20 @@ def register():
 
 @app.route("/register", methods=["POST"])
 def register_post():
-    username = request.form.get("username")
-    first_name = request.form.get("first_name")
-    last_name = request.form.get("last_name")
+    userID = request.form.get("username")
     password = request.form.get("password")
     password2 = request.form.get("password2")
+    firstName = request.form.get("first_name")
+    lastName = request.form.get("last_name")
+    admin = 0
+    seller = 0
+    creditCard = request.form.get("creditCard")
+    expirationDate = request.form.get("expirationDate")
+    securityCode = request.form.get("securityCode")
+    street = request.form.get("street")
+    city = request.form.get("city")
+    state = request.form.get("state")
+    _zip = request.form.get("zip")
 
     if password != password2:
         flash("Passwords do not match")
@@ -234,38 +243,26 @@ def register_post():
                   database=DB_NAME)
     
     cursor = cnx.cursor(prepared=True)
-    query = "SELECT * FROM Users WHERE userID = %s;"
-    result = []
-    try:
-        cursor.execute(query, [username])
-        result = cursor.fetchall()
-    except Exception:
-        return redirect(url_for("login"))
+    query = "CALL AddUser(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+    data = [userID,
+            base64.b64encode(bcrypt.generate_password_hash(password)),
+            firstName,
+            lastName,
+            admin,
+            seller,
+            creditCard,
+            expirationDate,
+            securityCode,
+            street,
+            city,
+            state,
+            _zip]
+    cursor.execute(query,
+                    data)
+    cnx.commit()
     cnx.close()
-    if len(result) > 0:
-        flash("Username already exists")
-        return render_template("register.html")
-    else:
-        # Connect to database
-        cnx = connect(user=DB_USERNAME,
-                      password=DB_PASSWORD,
-                      database=DB_NAME)
-        cursor = cnx.cursor(prepared=True)
-        query = "INSERT INTO Users (userID, password_hash, first_name, last_name, admin, seller) VALUES (%s, %s, %s, %s, %s, %s);"
-        try:
-            cursor.execute(query,
-                           (username,
-                               base64.b64encode(bcrypt.generate_password_hash(password).decode('utf-8')),
-                               first_name,
-                               last_name,
-                               0,
-                               0))
-            cnx.commit()
-            cnx.close()
-        except Exception:
-            return redirect(url_for("login"))
-        flash("Account created")
-        return redirect(url_for("login"))
+    flash("Account created")
+    return redirect(url_for("login"))
 
 
 @app.route("/updateAccount", methods=["GET"])
