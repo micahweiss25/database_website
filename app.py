@@ -533,8 +533,22 @@ def bid_post():
 
 @app.route("/removeUser", methods=["GET"])
 def removeUser():
+    cnx = connect(user=DB_USERNAME,
+                password=DB_PASSWORD,
+                database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "SELECT * FROM Users;"
+    cursor.execute(query)
+    result = list(cursor.fetchall()[0])
+    users = []
+    for user in result:
+        users.append(user[0])
+
+    cnx.close()
+
     return render_template("removeUser.html",
-                           user=current_user)
+                           user=current_user,
+                           users=users)
 
 
 @app.route("/removeUser", methods=["POST"])

@@ -10,5 +10,21 @@
         <input type="text" id="userID" name="userID" required>
         <input type="submit" value="Remove User">
     </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
 </body>
 </html>
