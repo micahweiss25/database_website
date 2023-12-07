@@ -159,7 +159,7 @@ def login_post():
     try:
         query = "SELECT * FROM Users WHERE userID = %s;"
         cursor.execute(query, [username])
-        result = cursor.fetchall()
+        result = list(cursor.fetchall()[0])
         cnx.close()
     except Exception as e:
         print(f"Error: failed to query database due to {e}")
@@ -167,7 +167,6 @@ def login_post():
     
     # check if username exists
     if len(result) > 0:
-        result = list(result[0])
         user = None
         try:
             if bcrypt.check_password_hash(base64.b64decode(result[1]),
@@ -219,20 +218,11 @@ def register():
 
 @app.route("/register", methods=["POST"])
 def register_post():
-    userID = request.form.get("username")
+    username = request.form.get("username")
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
     password = request.form.get("password")
     password2 = request.form.get("password2")
-    firstName = request.form.get("first_name")
-    lastName = request.form.get("last_name")
-    admin = 0
-    seller = 0
-    creditCard = request.form.get("creditCard")
-    expirationDate = request.form.get("expirationDate")
-    securityCode = request.form.get("securityCode")
-    street = request.form.get("street")
-    city = request.form.get("city")
-    state = request.form.get("state")
-    _zip = request.form.get("zip")
 
     if password != password2:
         flash("Passwords do not match")
@@ -245,10 +235,12 @@ def register_post():
     
     cursor = cnx.cursor(prepared=True)
     query = "SELECT * FROM Users WHERE userID = %s;"
-    cursor.execute(query, [userID])
-    result = cursor.fetchall()
-
-
+    result = []
+    try:
+        cursor.execute(query, [username])
+        result = cursor.fetchall()
+    except Exception:
+        return redirect(url_for("login"))
     cnx.close()
     if len(result) > 0:
         flash("Username already exists")
@@ -259,24 +251,19 @@ def register_post():
                       password=DB_PASSWORD,
                       database=DB_NAME)
         cursor = cnx.cursor(prepared=True)
-        query = "CALL AddUser(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-        data = [userID,
-                base64.b64encode(bcrypt.generate_password_hash(password)),
-                firstName,
-                lastName,
-                admin,
-                seller,
-                creditCard,
-                expirationDate,
-                securityCode,
-                street,
-                city,
-                state,
-                _zip]
-        cursor.execute(query,
-                       data)
-        cnx.commit()
-        cnx.close()
+        query = "INSERT INTO Users (userID, password_hash, first_name, last_name, admin, seller) VALUES (%s, %s, %s, %s, %s, %s);"
+        try:
+            cursor.execute(query,
+                           (username,
+                               base64.b64encode(bcrypt.generate_password_hash(password).decode('utf-8')),
+                               first_name,
+                               last_name,
+                               0,
+                               0))
+            cnx.commit()
+            cnx.close()
+        except Exception:
+            return redirect(url_for("login"))
         flash("Account created")
         return redirect(url_for("login"))
 
@@ -356,7 +343,6 @@ def product_detail(productID, category):
                   database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
     product = None
-    if category == "Book":
         query = "CALL ViewBook(%s);"
         cursor.execute(query, [productID])
         result = list(cursor.fetchall()[0])
@@ -570,8 +556,18 @@ def removeUser_post():
 
 @app.route("/removeProduct", methods=["GET"])
 def removeProduct():
+    cnx = connect(user=DB_USERNAME,
+                password=DB_PASSWORD,
+                database=DB_NAME)
+    cursor = cnx.cursor(prepared=True)
+    query = "CALL ViewAllProducts();"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    data = process_products(result)
+    cnx.close()
     return render_template("removeProduct.html",
-                           user=current_user)
+                           user=current_user,
+                           products=data)
 
 
 @app.route("/removeProduct", methods=["POST"])
