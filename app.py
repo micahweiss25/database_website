@@ -540,7 +540,7 @@ def removeUser():
     cursor = cnx.cursor(prepared=True)
     query = "SELECT * FROM Users;"
     cursor.execute(query)
-    result = list(cursor.fetchall()[0])
+    result = cursor.fetchall()
     users = []
     for user in result:
         users.append(user[0])
@@ -562,7 +562,7 @@ def removeUser_post():
     cursor = cnx.cursor(prepared=True)
     query = "CALL RemoveUser(%s);"
     cursor.execute(query,
-                    (userID))
+                    [userID])
     cnx.commit()
     cnx.close()
     flash("User removed")
