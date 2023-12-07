@@ -35,7 +35,7 @@ CREATE TABLE Address (
 
 CREATE TABLE Product (
     productID INT NOT NULL AUTO_INCREMENT,
-    name CHAR(30) NOT NULL,
+    name CHAR(80) NOT NULL,
     startingPrice DECIMAL(5,2) NOT NULL,
     nltDate DATETIME NOT NULL,
     PRIMARY KEY (productID)
@@ -54,7 +54,7 @@ CREATE TABLE Ride (
 CREATE TABLE Book (
     itemID INT NOT NULL AUTO_INCREMENT,
     productID INT NOT NULL,
-    author CHAR(30) NOT NULL,
+    author CHAR(60) NOT NULL,
     class CHAR(30) NOT NULL,
     PRIMARY KEY (itemID),
     FOREIGN KEY (productID) REFERENCES Product(productID)
