@@ -40,6 +40,29 @@
         <a href="{{ url_for('removeProduct') }}" id="removeProduct">Remove Product</a>
         <a href="{{ url_for('removeUser') }}" id="removeUser">Remove User</a>
     </div>
+<body>
+    <h1>Remove User</h1>
+    <form action="{{ url_for('removeUser') }}" method="POST">
+        <label for="userID">User ID:</label>
+        <input type="text" id="userID" name="userID" required>
+        <input type="submit" value="Remove User">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
     <script>
         var isLoggedIn = {{ current_user.is_authenticated|default(false)|tojson|safe }}; // This should be replaced with actual login status check
         
@@ -67,28 +90,5 @@
     
 
     </script>
-<body>
-    <h1>Remove User</h1>
-    <form action="{{ url_for('removeUser') }}" method="POST">
-        <label for="userID">User ID:</label>
-        <input type="text" id="userID" name="userID" required>
-        <input type="submit" value="Remove User">
-    </form>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Username</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr>
-                <td>{{ user }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
 </body>
 </html>

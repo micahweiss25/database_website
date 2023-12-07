@@ -106,12 +106,13 @@ def get_user_by_id(userID):
         cursor = cnx.cursor(prepared=True)
         query = "SELECT * FROM Users WHERE userID = %s;"
         cursor.execute(query, [userID])
-        result = cursor.fetchall()[0]
+        result = cursor.fetchall()
         cnx.close()
     except Exception as e:
         print(f"Error: failed to query database due to {e}")
         raise e
     if len(result) > 0:
+        result = result[0]
         try:
             user = User(userID=result[0],
                         password_hash=result[1],
@@ -208,6 +209,7 @@ def index():
     data = process_products(result)
     cnx.close()
     return render_template("viewProducts.html",
+                           current_user=current_user,
                            products=data)
 
 
