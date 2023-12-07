@@ -39,26 +39,6 @@
         <a href="" id="bids">Show Bids</a>
         <a href="{{ url_for('register') }}" id="register" class="right">Register</a>
     </div>
-      <script>
-          var isLoggedIn = {{ current_user.is_authenticated|tojson|safe }}; // This should be replaced with actual login status check
-          var isSeller = {{ current_user.seller|tojson|safe }}; // This should be replaced with actual seller status check
-      
-          if (isLoggedIn) {
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('register').style.display = 'none';
-            if (!isSeller) {
-                document.getElementById('listedProducts').style.display = 'none';
-            }
-        } else {
-            document.getElementById('bids').style.display = 'none';
-            document.getElementById('logout').style.display = 'none';
-            document.getElementById('listedProducts').style.display = 'none';
-            document.getElementById('listProducts').style.display = 'none';
-            document.getElementById('updateAccount').style.display = 'none';
-          }
-      
-
-      </script>
     <h1>{{ product.name }}</h1>
     <p>Price: {{ product.price }}</p>
     <p>Bid Expiration: {{ product.expiration }}</p>
@@ -90,11 +70,31 @@
             {% endfor %}
         </tbody>
     </table>
-    <form action="{{ url_for('bid') }}" method="GET">
-        <label for="bid">Bid:</label>
-        <input type="number" id="bid" name="bid" step="0.01" required>
-        <input name="productID" type="hidden" value="1">
-        <input type="submit" value="Bid">
-    </form>
+    {% if current_user.is_authenticated %}
+        <form action="{{ url_for('bid') }}" method="GET">
+            <label for="bid">Bid:</label>
+            <input type="number" id="bid" name="bid" step="0.01" required>
+            <input name="productID" type="hidden" value="1">
+            <input type="submit" value="Bid">
+        </form>
+    {% endif %}
+    <script>
+        var isLoggedIn = {{ current_user.is_authenticated|default(false)|tojson|safe }}; // This should be replaced with actual login status check
+        
+        if (isLoggedIn) {
+          var isSeller = {{ current_user.seller|default(false)|tojson|safe }}; // Replace undefined with a default value
+          document.getElementById('login').style.display = 'none';
+          document.getElementById('register').style.display = 'none';
+          if (!isSeller) {
+              document.getElementById('listedProducts').style.display = 'none';
+          }
+      } else {
+          document.getElementById('bids').style.display = 'none';
+          document.getElementById('logout').style.display = 'none';
+          document.getElementById('listedProducts').style.display = 'none';
+          document.getElementById('listProducts').style.display = 'none';
+          document.getElementById('updateAccount').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

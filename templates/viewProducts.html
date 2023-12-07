@@ -40,10 +40,10 @@
         <a href="{{ url_for('register') }}" id="register" class="right">Register</a>
     </div>
       <script>
-          var isLoggedIn = {{ current_user.is_authenticated|tojson|safe }}; // This should be replaced with actual login status check
-          var isSeller = {{ current_user.seller|tojson|safe }}; // This should be replaced with actual seller status check
-      
+          var isLoggedIn = {{ current_user.is_authenticated|default(false)|tojson|safe }}; // This should be replaced with actual login status check
+          
           if (isLoggedIn) {
+            var isSeller = {{ current_user.seller|default(false)|tojson|safe }}; // Replace undefined with a default value
             document.getElementById('login').style.display = 'none';
             document.getElementById('register').style.display = 'none';
             if (!isSeller) {
