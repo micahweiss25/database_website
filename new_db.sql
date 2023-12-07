@@ -35,7 +35,7 @@ CREATE TABLE Address (
 
 CREATE TABLE Product (
     productID INT NOT NULL AUTO_INCREMENT,
-    name CHAR(80) NOT NULL,
+    name CHAR(120) NOT NULL,
     startingPrice DECIMAL(5,2) NOT NULL,
     nltDate DATETIME NOT NULL,
     PRIMARY KEY (productID)
