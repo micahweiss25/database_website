@@ -1,5 +1,4 @@
-Terminal close -- exit!
-wpmb;
+DROP DATABASE IF EXISTS wpmb;
 CREATE DATABASE wpmb;
 USE wpmb;
 
@@ -316,7 +315,9 @@ SELECT * FROM Book;
 
 
 -- # Add a user
-CALL AddUser('johndoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'John', 'Doe', 0, 0, '1234567890123456', '2018-01-01', '123', '123 Main St', 'San Luis Obispo', 'CA', '93405');
+-- # admin
+CALL AddUser('johndoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'John', 'Doe', 1, 1, '1234567890123456', '2018-01-01', '123', '123 Main St', 'San Luis Obispo', 'CA', '93405');
+-- # base users
 CALL AddUser('sallydoe', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Sally', 'Doe', 0, 0, '1234567890122456', '2018-01-01', '123', '1213 Main St', 'San Luis Obispo', 'CA', '95405');
 CALL AddUser('stevegill', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Steve', 'Gilland', 0, 0, '1234567890125456', '2018-01-01', '123', '124 Main St', 'San Luis Obispo', 'CA', '95405');
 CALL AddUser('joebiden', 'JDJiJDEyJHVmM0FqWlFXMUU3SDhLb1VaN3BHdXVPV1UxdUZMLkVIL3NVSGgzbUQyZ2xGMG15UWM5YWcy', 'Joe', 'Biden', 0, 0, '1234567890125457', '2018-01-01', '123', '125 Main St', 'San Luis Obispo', 'CA', '95405');

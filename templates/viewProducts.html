@@ -40,34 +40,36 @@
         <a href="{{ url_for('register') }}" id="register" class="right">Register</a>
         <a href="{{ url_for('removeProduct') }}" id="removeProduct">Remove Product</a>
         <a href="{{ url_for('removeUser') }}" id="removeUser">Remove User</a>
+        <a href="{{ url_for('removeProduct') }}" id="removeProduct">Remove Product</a>
+        <a href="{{ url_for('removeUser') }}" id="removeUser">Remove User</a>
     </div>
-      <script>
-          var isLoggedIn = {{ current_user.is_authenticated|default(false)|tojson|safe }}; // This should be replaced with actual login status check
-          
-          if (isLoggedIn) {
-            var isSeller = {{ current_user.seller|default(false)|tojson|safe }}; // Replace undefined with a default value
-            var isAdmin = {{ current_user.admin|default(false)|tojson|safe }};
-            document.getElementById('login').style.display = 'none';
-            document.getElementById('register').style.display = 'none';
-            if (!isSeller) {
-                document.getElementById('listedProducts').style.display = 'none';
-            }
-            if (!isAdmin) {
-                document.getElementById('removeProduct').style.display = 'none';
-                document.getElementById('removeUser').style.display = 'none';
-            }
-        } else {
-            document.getElementById('bids').style.display = 'none';
-            document.getElementById('logout').style.display = 'none';
-            document.getElementById('listedProducts').style.display = 'none';
-            document.getElementById('listProducts').style.display = 'none';
-            document.getElementById('updateAccount').style.display = 'none';
-            document.getElementById('removeProduct').style.display = 'none';
-            document.getElementById('removeUser').style.display = 'none';
+    <script>
+        var isLoggedIn = {{ current_user.is_authenticated|default(false)|tojson|safe }}; // This should be replaced with actual login status check
+        
+        if (isLoggedIn) {
+          var isSeller = {{ current_user.seller|default(false)|tojson|safe }}; // Replace undefined with a default value
+          var isAdmin = {{ current_user.admin|default(false)|tojson|safe }};
+          document.getElementById('login').style.display = 'none';
+          document.getElementById('register').style.display = 'none';
+          if (!isSeller) {
+              document.getElementById('listedProducts').style.display = 'none';
           }
-      
+          if (!isAdmin) {
+              document.getElementById('removeProduct').style.display = 'none';
+              document.getElementById('removeUser').style.display = 'none';
+          }
+      } else {
+          document.getElementById('bids').style.display = 'none';
+          document.getElementById('logout').style.display = 'none';
+          document.getElementById('listedProducts').style.display = 'none';
+          document.getElementById('listProducts').style.display = 'none';
+          document.getElementById('updateAccount').style.display = 'none';
+          document.getElementById('removeProduct').style.display = 'none';
+          document.getElementById('removeUser').style.display = 'none';
+        }
+    
 
-      </script>
+    </script>
 
       <h1>Products</h1>
       <table>
