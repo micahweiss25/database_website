@@ -116,10 +116,10 @@ BEGIN
 END //
 
 CREATE PROCEDURE ListBook(
-    name CHAR(30),
+    name CHAR(120),
     startingPrice DECIMAL(5,2),
     nltDate DATETIME,
-    author CHAR(30),
+    author CHAR(60),
     class CHAR(30),
     puserID char(20)
 )
