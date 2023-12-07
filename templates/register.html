@@ -7,11 +7,54 @@
     <div id="content" align="center">
         <form action="/flask/register" method="post">
             <h1>Register</h1>
-            <input type="text" id="username" placeholder="Username" required><br><br>
-            <input type="text" id="first_name" placeholder="First Name" required><br><br>
-            <input type="text" id="last_name" placeholder="Last Name" required><br><br>
-            <input type="password" id="password" placeholder="Password" required><br><br>
-            <input type="password" id="confirmPassword" placeholder="Confirm Password" required><br><br>
+            <label for="username">Username:</label>
+            <br>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <br>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <label for="password2">Confirm Password:</label>
+            <br>
+            <input type="password" id="password2" name="password2" required>
+            <br>
+            <label for="first_name">First Name:</label>
+            <br>
+            <input type="text" id="first_name" name="first_name">
+            <br>
+            <label for="last_name">Last Name:</label>
+            <br>
+            <input type="text" id="last_name" name="last_name">
+            <br>
+            <label for="creditCard">Credit Card:</label>
+            <br>
+            <input type="text" id="creditCard" name="creditCard">
+            <br>
+            <label for="expirationDate">Expiration Date:</label>
+            <br>
+            <input type="date" id="expirationDate" name="expirationDate">
+            <br>
+            <label for="securityCode">Security Code:</label>
+            <br>
+            <input type="text" id="securityCode" name="securityCode">
+            <br>
+            <label for="street">Street:</label>
+            <br>
+            <input type="text" id="street" name="street">
+            <br>
+            <label for="city">City:</label>
+            <br>
+            <input type="text" id="city" name="city">
+            <br>
+            <label for="state">State:</label>
+            <br>
+            <input type="text" id="state" name="state">
+            <br>
+            <label for="zip">Zip:</label>
+            <br>
+            <input type="text" id="zip" name="zip">
+            <br>
             <input type="submit" value="Register">
         </form>
     </div>

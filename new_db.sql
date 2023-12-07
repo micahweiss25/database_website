@@ -1,10 +1,11 @@
-DROP DATABASE IF EXISTS wpmb;
+Terminal close -- exit!
+wpmb;
 CREATE DATABASE wpmb;
 USE wpmb;
 
 DROP TABLE IF EXISTS Users;
 CREATE TABLE Users (
-	userID CHAR(9) NOT NULL,
+	userID char(20) NOT NULL,
     password CHAR(80) NOT NULL,
     firstName CHAR(15) NOT NULL,
     lastName CHAR(15) NOT NULL,
@@ -17,7 +18,7 @@ CREATE TABLE CreditCard (
     cardNumber CHAR(16) NOT NULL,
     expirationDate DATE NOT NULL,
     securityCode CHAR(3) NOT NULL,
-    userID CHAR(9) NOT NULL,
+    userID char(20) NOT NULL,
     PRIMARY KEY (cardNumber),
     FOREIGN KEY (userID) REFERENCES Users(userID)
 );
@@ -28,7 +29,7 @@ CREATE TABLE Address (
     city CHAR(30) NOT NULL,
     state CHAR(2) NOT NULL,
     zip CHAR(5) NOT NULL,
-    userID CHAR(9) NOT NULL,
+    userID char(20) NOT NULL,
     PRIMARY KEY (addressID),
     FOREIGN KEY (userID) REFERENCES Users(userID)
 );
@@ -61,7 +62,7 @@ CREATE TABLE Book (
 );
 
 CREATE TABLE UserSells (
-    userID CHAR(9) NOT NULL,
+    userID char(20) NOT NULL,
     productID INT NOT NULL,
     PRIMARY KEY (userID, productID),
     FOREIGN KEY (userID) REFERENCES Users(userID),
@@ -70,7 +71,7 @@ CREATE TABLE UserSells (
 
 CREATE TABLE UserBids (
     bidID INT NOT NULL AUTO_INCREMENT,
-    userID CHAR(9) NOT NULL,
+    userID char(20) NOT NULL,
     productID INT NOT NULL,
     bidAmount DECIMAL(5,2) NOT NULL,
     PRIMARY KEY (bidID),
@@ -104,7 +105,7 @@ BEGIN
 END //
 
 CREATE PROCEDURE BidOnProduct(
-    userID CHAR(9),
+    userID char(20),
     productID INT,
     bidAmount DECIMAL(5,2)
 )
@@ -121,7 +122,7 @@ CREATE PROCEDURE ListBook(
     nltDate DATETIME,
     author CHAR(30),
     class CHAR(30),
-    puserID CHAR(9)
+    puserID char(20)
 )
 BEGIN
     START TRANSACTION;
@@ -145,7 +146,7 @@ CREATE PROCEDURE ListRide(
     time DATETIME,
     departureFrom CHAR(30),
     seatsAvailable INT,
-    puserID CHAR(9)
+    puserID char(20)
 )
 BEGIN
     START TRANSACTION;
@@ -206,7 +207,7 @@ BEGIN
 END //
 
 CREATE PROCEDURE AddUser(
-    userID CHAR(9),
+    userID char(20),
     password CHAR(80),
     firstName CHAR(15),
     lastName CHAR(15),
@@ -235,7 +236,7 @@ CREATE PROCEDURE UpdateCreditCard(
     new_cardNumber CHAR(16),
     new_expirationDate DATE,
     new_securityCode CHAR(3),
-    puserID CHAR(9)
+    puserID char(20)
 )
 BEGIN
     START TRANSACTION;
@@ -252,7 +253,7 @@ CREATE PROCEDURE UpdateAddress(
     new_city CHAR(30),
     new_state CHAR(2),
     new_zip CHAR(5),
-    puserID CHAR(9)
+    puserID char(20)
 )
 BEGIN
     START TRANSACTION;
@@ -266,7 +267,7 @@ BEGIN
 END //
 
 CREATE PROCEDURE RemoveUser(
-    puserID CHAR(9)
+    puserID char(20)
 )
 BEGIN
     SET SQL_SAFE_UPDATES = 0;
