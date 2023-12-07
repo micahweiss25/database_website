@@ -343,6 +343,7 @@ def product_detail(productID, category):
                   database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
     product = None
+    if category == 'Book':
         query = "CALL ViewBook(%s);"
         cursor.execute(query, [productID])
         result = list(cursor.fetchall()[0])
@@ -570,17 +571,19 @@ def removeProduct():
                            products=data)
 
 
-@app.route("/removeProduct", methods=["POST"])
-def removeProduct_post():
-    productID = request.form.get("productID")
+@app.route("/removeProduct/<string:productID>/<string:category>", methods=["POST", "GET"])
+def removeProduct_post(productID, category):
     # Connect to database
     cnx = connect(user=DB_USERNAME,
                     password=DB_PASSWORD,
                     database=DB_NAME)
     cursor = cnx.cursor(prepared=True)
-    query = "CALL RemoveProduct(%s);"
+    if category == 'Book':
+        query = "CALL RemoveBook(%s);"
+    elif category == 'Ride':
+        query = "CALL RemoveRide(%s)"
     cursor.execute(query,
-                    (productID))
+                    [productID])
     cnx.commit()
     cnx.close()
     flash("Product removed")
