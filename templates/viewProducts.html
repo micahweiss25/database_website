@@ -75,7 +75,7 @@
       <table>
           {% for product in products %}
         <tr>
-            <td><a href="{{ url_for('removeProduct', productID=product.productID) }}" method="post">{{ product.name }}</a></td>
+            <td><a href="{{ url_for('product_detail', productID=product.productID, category=product.category) }}">{{ product.name }}</a></td>
             <td>{{ product.price }}</td>
             <td>{{ product.expiration }}</td>
             {% if product.category == 'Book' %}
