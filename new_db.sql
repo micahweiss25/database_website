@@ -182,26 +182,40 @@ END //
 
 
 CREATE PROCEDURE RemoveRide(
-    productID INT
+    pproductID INT
 )
 BEGIN
     START TRANSACTION;
+    DELETE FROM UserSells
+    WHERE productID = pproductID;
+
+    DELETE FROM UserBids
+    WHERE productID = pproductID;
+
     DELETE FROM Ride
-    WHERE productID = productID;
+    WHERE productID = pproductID;
+
     DELETE FROM Product
-    WHERE productID = productID;
+    WHERE productID = pproductID;
     COMMIT;
 END //
 
 CREATE PROCEDURE RemoveBook(
-    productID INT
+    pproductID INT
 )
 BEGIN
     START TRANSACTION;
+    DELETE FROM UserSells
+    WHERE productID = pproductID;
+
+    DELETE FROM UserBids
+    WHERE productID = pproductID;
+
     DELETE FROM Book
-    WHERE productID = productID;
+    WHERE productID = pproductID;
+
     DELETE FROM Product
-    WHERE productID = productID;
+    WHERE productID = pproductID;
     COMMIT;
 END //
 
